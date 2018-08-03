@@ -25,7 +25,7 @@ var adminName = (req, res, next) => {
 var logger = (req, res, next) => {
     var url = req.url;
     var time = new Date();
-    console.log('Served request for ' + url + ' at ' + time);
+    console.log('Served request for ' + url + ' at ' + time+ url);
     next();
 };
 

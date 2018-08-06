@@ -72,25 +72,33 @@ app.use('/person', (req, res) => {
 
 app.use('/update', (req, res) => {
 
-
-    var updateName = req.body.username;
-    var updateAge = req.body.age;
-
-	Person.findOne( {name: updateName}, (err, person) => {
+  var updateName = req.body.username;
+  Person.findOne( {name: updateName}, (err, person) => {
 		if (err) {
+      console.log('in err')
 		    res.type('html').status(500);
 		    res.send('Error: ' + err);
 		}
 		else if (!person) {
+      console.log('in !person')
 		    res.type('html').status(200);
 		    res.send('No person named ' + updateName);
 		}
 		else {
-		    res.render('updated', { person : person });
-		}
+       console.log('in else')
+        var updateAge = req.body.age;
+        person.age = req.body.age
+        person.save((err)=>{
+          if(err){
+            res.type('html').status(500);
+            res.send('Error: ' + err);
+          }
+          else {
+            res.render('updated', { person : person });
+          }
+        })
+	    	}
 	    });
-
-
     });
 
 

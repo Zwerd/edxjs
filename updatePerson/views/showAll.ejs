@@ -2,8 +2,7 @@ Here are all the people:
 <ul>
 <% persons.forEach( (person) => { %>
 
-<li><a href="/person?name=<%= person.name %>"> <%= person.name %>: <%= person.age %></li>
-
+<li><a href="/person?name=<%= person.name %>"> <%= person.name %>:<%= person.age %></li>
 <% }); %>
 </ul>
 

@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 // where does the db name come from? I just made this up
-mongoose.connect('mongodb://localhost:27017/myDatabase',{ useNewUrlParser: true });
+mongoose.connect('mongodb://localhost:27017/myDatabase');
 
 var Schema = mongoose.Schema;
 

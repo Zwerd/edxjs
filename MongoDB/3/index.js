@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var Book = require('./Book.js');
 
 app.use('/createbook', (req, res) => {
-	console.log(req.body.authors);
+	console.log(req.body);
 	var newBook = new Book(req.body);
 	newBook.save( (err) => {
 		if (err) {

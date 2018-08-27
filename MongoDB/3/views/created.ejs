@@ -1,15 +1,17 @@
+<!--this is views/created.ejs -->
 Successfully created new person:
-Title: <%= book.name %>
-<p>
+<br>
+Title: <%= book.title %>
+<br>
 Year: <%= book.year %>
 <p>
 Author #1: <br>
-Name: <%= book.authors[0][name] %>
-Affiliation: <%= book.authors[0][affiliation] %>
+Name: <%= book.authors[0].name %>
+Affiliation: <%= book.authors[0].affiliation %>
 <p>
 Author #2: <br>
-Name: <%= book.authors[1][name] %>
-Affiliation:  <%= book.authors[0][affiliation] %>
+Name: <%= book.authors[1].name %>
+Affiliation:  <%= book.authors[1].affiliation %>
 
 <br><a href='/public/bookform.html'>Create New Book</a>
-<br><a href='/all'>Show All</a>
+<br><a href='/public/booksearch.html'>Search For Book</a>

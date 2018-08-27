@@ -10,6 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var Book = require('./Book.js');
 
 app.use('/createbook', (req, res) => {
+	console.log(req.body);
 	var newBook = new Book(req.body);
 	newBook.save( (err) => {
 		if (err) {
@@ -17,7 +18,7 @@ app.use('/createbook', (req, res) => {
 		    res.send('Error: ' + err);
 		}
 		else {
-		    res.send('Created new book');
+		    res.render('created', { book: newBook });
 		}
 	    } );
     });
@@ -54,6 +55,7 @@ function searchAny(req, res) {
 	terms.push( { year: req.body.year });
     }
     var query = { $or : terms };
+		console.log(query)
 
 	Book.find( query, (err, books) => {
 		if (err) {
@@ -79,7 +81,7 @@ function searchAll(req, res) {
 	if (req.body.year) {
 	    query.year = req.body.year;
 	}
-
+	console.log(query);
 	Book.find( query, (err, books) => {
 		if (err) {
 		    res.type('html').status(500);

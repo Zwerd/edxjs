@@ -1,10 +1,8 @@
 function makeArr(){
       const arr = []
             for (var i=0; i< 5 ; i++){
-              console.log(i)
-              
               arr.push(function(){console.log(i)})
-              console.log(arr,arr[i]())
+              console.log("this is the arr",arr,"this is the i and arr[i]():",i, ":", arr[0]())
             }
       console.log(arr)    
       return arr

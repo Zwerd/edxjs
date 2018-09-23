@@ -6,14 +6,18 @@ class MySet extends Set {
     super(arr)
     this.originalArray = arr
   }
-}
   add(val){
-    super.add(val)
-    console.log(`added ${val} to the set!`)
+      super.add(val)
+      console.log(`added ${val} to the set!`)
+    }
+  toArray(){
+    return Array.from(this)
   }
-toArray(){
-  return Array.from(this)
+  reset(){
+    return new MySet(this.originalArray)
+  }
 }
-reset(){
-  return new MySet(this.originalArray)
-}
+
+
+const x = new MySet(1,2,3)
+console.log(x.toArray())

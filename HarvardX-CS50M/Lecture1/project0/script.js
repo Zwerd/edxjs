@@ -10,14 +10,19 @@ const itemCountSpan = document.getElementById('item-count')
 const uncheckedCountSpan = document.getElementById('unchecked-count')
 const itemList = []
 let checkedNumber = parseInt(0)
-let item,itemsNumber;
+let item,itemsNumber,element;
 
 
 function newTodo() {
   item = prompt("Enter TODO for your list: ")
   itemList.push(item)
   itemsNumber = parseInt(itemList.length)
-  list.innerHTML +=  '<input type="checkbox" id="'+item+'"name="TODO" value="'+item+'"onClick="toggleCheckbox(this)">'+item+"<button id='"+item+"' onclick='removeItem("+item+")'>Delete</button><br>"
+  element = '<input type="checkbox" id="'+item
+            +'"name="TODO" value="'+item
+            +'"onClick="toggleCheckbox(this)">'+item
+            +"<button id='"+item+"' onclick='removeItem("+item
+            +")'>Delete</button><br>"
+  list.innerHTML += element
   console.log(itemsNumber)
   itemCountSpan.innerHTML = itemsNumber
   uncheckedCountSpan.innerHTML = itemsNumber - checkedNumber

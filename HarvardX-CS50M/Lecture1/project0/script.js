@@ -17,27 +17,28 @@ function newTodo() {
   item = prompt("Enter TODO for your list: ")
   itemList.push(item)
   itemsNumber = parseInt(itemList.length)
-  element = '<input type="checkbox" id="'+item
+  element = '<li type="checkbox" id="'+item
             +'"name="TODO" value="'+item
-            +'"onClick="toggleCheckbox(this)">'+item
-            +"<button id='"+item+"' onclick='removeItem("+item
-            +")'>Delete</button><br>"
+            +'"onClick="changeColor(this)">'+item
+            +'</li>'
   list.innerHTML += element
-  console.log(itemsNumber)
   itemCountSpan.innerHTML = itemsNumber
   uncheckedCountSpan.innerHTML = itemsNumber - checkedNumber
-  console.log(classNames.TODO_ITEM)
+  document.getElementById(item).style.backgroundColor = 'red'
 }
-function toggleCheckbox(element) {
-  if(element.checked){
+
+
+function changeColor(element) {
+  console.log(element.style.backgroundColor)
+  if(element.style.backgroundColor == 'red'){
+    element.style.backgroundColor = 'green'
     checkedNumber += parseInt(1)
-    console.log(checkedNumber)
+    console.log('check')
   }else{
+    element.style.backgroundColor = 'red'
     checkedNumber -= parseInt(1)
   }
   uncheckedCountSpan.innerHTML = itemsNumber - checkedNumber
-  console.log(itemsNumber - checkedNumber, itemsNumber,checkedNumber)
-  console.log(element.checked)
 }
 function removeItem(item){
   var ul = document.getElementById("todo-list");

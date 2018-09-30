@@ -19,10 +19,11 @@ function newTodo() {
   item = prompt("Enter TODO for your list: ")
   itemList.push(item)
   itemsNumber = parseInt(itemList.length)
-  element = '<li type="checkbox" id="'+item + todonumber
+  element = '<button id="deletebutton" onclick="removeItem('+"'"+item + todonumber+"'"+')">Delete</button>'
+            + '<li type="checkbox" id="'+item + todonumber
             +'"name="TODO" value="'+item + todonumber
             +'"onClick="changeColor(this)">'+item
-            +'<button id="deletebutton" onclick="removeItem('+item + todonumber+')">Delete</button></li><br>'
+            +'</li>'
   list.innerHTML += element
   itemCountSpan.innerHTML = itemsNumber
   uncheckedCountSpan.innerHTML = itemsNumber - checkedNumber
@@ -43,6 +44,7 @@ function changeColor(item) {
   uncheckedCountSpan.innerHTML = itemsNumber - checkedNumber
 }
 function removeItem(item){
+  item = '"' + item + '"'
   console.log("delete was clicked",item)
   var ul = document.getElementById("todo-list");
   ul.removeChild(item);

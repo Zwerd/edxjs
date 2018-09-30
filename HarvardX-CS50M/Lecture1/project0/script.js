@@ -56,5 +56,7 @@ function checkIndex(element){
   if(!todoUncheck.indexOf(element.id)+1 <= 0){
     todoUncheck.pop(0,todoUncheck.indexOf(element.id)+1)
     console.log(todoUncheck)
+  }else{
+
   }
 }

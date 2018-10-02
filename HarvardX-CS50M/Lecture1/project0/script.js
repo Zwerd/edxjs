@@ -20,43 +20,54 @@ function newTodo() {
   todoTask = todoName + todoNumber;
   todoList.push(todoTask);
   todoUncheck.push(todoTask);
-  todoText = prompt("Please enter your task in TODO list: ");
+  todoText = callPrompt()
   newelement = '<button id="delete'+todoTask+'" onclick="remove(this)">Delete</button>'
                +'<li id="'+todoTask+'" onclick="changeColor(this)">'+todoText+'</li>'
   itemCountSpan.innerHTML = todoList.length
   uncheckedCountSpan.innerHTML = todoUncheck.length
   list.innerHTML += newelement
   document.getElementById(todoTask).style.backgroundColor = 'red'
-  console.log(todoUncheck)
 }
+
 function remove(element){
   let id = element.id.slice(6, element.id.langth)
   list.removeChild(element)
   list.removeChild(document.getElementById(id))
-  todoList.pop(0,todoList.indexOf(id)+1)
-  checkIndex(element)
-  console.log(todoUncheck)
+  removeA(todoList, id)
+  removeA(todoUncheck, id)
   itemCountSpan.innerHTML = todoList.length
   uncheckedCountSpan.innerHTML = todoUncheck.length
 }
+
 function changeColor(element){
   if(element.style.backgroundColor == 'red'){
     element.style.backgroundColor = 'green'
-    todoUncheck.pop(0,todoUncheck.indexOf(element.id)+1)
+    console.log(todoUncheck.indexOf(element.id))
+    removeA(todoUncheck, element.id)
     uncheckedCountSpan.innerHTML = todoUncheck.length
-    console.log(todoUncheck)
   }else{
     element.style.backgroundColor = 'red'
     todoUncheck.push(element.id)
     uncheckedCountSpan.innerHTML = todoUncheck.length
-    console.log(todoUncheck)
   }
 }
-function checkIndex(element){
-  if(!todoUncheck.indexOf(element.id)+1 <= 0){
-    todoUncheck.pop(0,todoUncheck.indexOf(element.id)+1)
-    console.log(todoUncheck)
-  }else{
 
-  }
+function removeA(arr) {
+    var what, a = arguments, L = a.length, ax;
+    while (L > 1 && arr.length) {
+        what = a[--L];
+        while ((ax= arr.indexOf(what)) !== -1) {
+            arr.splice(ax, 1);
+        }
+    }
+    return arr;
 }
+
+function callPrompt(){
+  task = prompt("Please enter your task in TODO list: ");
+  if(task == ''){
+    alert("Not valide task!")
+    callPrompt()
+  }
+ return task;
+ }

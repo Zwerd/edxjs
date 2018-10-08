@@ -21,12 +21,12 @@ function newTodo() {
   todoList.push(todoTask);
   todoUncheck.push(todoTask);
   todoText = callPrompt()
-  newelement = '<button id="delete'+todoTask+'" onclick="remove(this)">Delete</button>'
+  newelement = '<button class="delete" id="delete'+todoTask+'" onclick="remove(this)">Delete</button>'
                +'<li id="'+todoTask+'" onclick="changeColor(this)">'+todoText+'</li>'
   itemCountSpan.innerHTML = todoList.length
   uncheckedCountSpan.innerHTML = todoUncheck.length
   list.innerHTML += newelement
-  document.getElementById(todoTask).style.backgroundColor = 'red'
+  document.getElementById(todoTask).style.backgroundColor = 'silver '
 }
 
 function remove(element){
@@ -40,13 +40,14 @@ function remove(element){
 }
 
 function changeColor(element){
-  if(element.style.backgroundColor == 'red'){
-    element.style.backgroundColor = 'green'
+  console.log(element.style.backgroundColor)
+  if(element.style.backgroundColor == 'silver'){
+    element.style.backgroundColor = 'lightgreen'
     console.log(todoUncheck.indexOf(element.id))
     removeA(todoUncheck, element.id)
     uncheckedCountSpan.innerHTML = todoUncheck.length
   }else{
-    element.style.backgroundColor = 'red'
+    element.style.backgroundColor = 'silver'
     todoUncheck.push(element.id)
     uncheckedCountSpan.innerHTML = todoUncheck.length
   }
@@ -65,7 +66,7 @@ function removeA(arr) {
 
 function callPrompt(){
   task = prompt("Please enter your task in TODO list: ");
-  if(task == ''){
+  if(task == '' || task == null){
     alert("Not valide task!")
     callPrompt()
   }

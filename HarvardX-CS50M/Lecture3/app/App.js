@@ -11,9 +11,7 @@ export default class App extends React.Component {
     };
   }
 
-componentWillMount(){
-  setInterval(this.timer(),1000)
-}
+
 
 componentWillUpdate(){
   if (this.state.seconds == 0){

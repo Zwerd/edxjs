@@ -3,44 +3,48 @@ import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
 
 let seconds = ''
 
-
-
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       minutes:25,
-      seconds:0,
+      seconds:59,
+      startTimer:true
 
     };
   }
 
 componentDidMount(){
-  setInterval(this.timer,1000)
-}
-
-componentWillUpdate(){
-  if (this.state.seconds == 0){
-    this.setState(prevState => ({
-      seconds: 59,
-      minutes: prevState.minutes - 1
-    }))
-  }
+  this.startInterval = setInterval(this.timer,1000)
 }
 
 timer = () => {
-
-  this.setState(prevState => ({
-    seconds: prevState.seconds - 1
-  }))
+  let seconds = String(this.state.seconds - 1);
+  let minutes = this.state.minutes;
+  if(seconds.length == 1){
+    seconds = '0'+seconds
+  }
+  if(seconds == '-1'){
+    seconds = 59;
+    minutes = String(this.state.minutes - 1);
+  }
+  if(minutes.length==1){
+    minutes = '0'+minutes
+  }
+  this.setState({
+    seconds: seconds,
+    minutes: minutes
+  })
 }
 
-doubleDigit(num){
-  if(String(num).length == 1){
-    return '0'+String(num)
-  }else(
-    return String(num)
-  )
+stopTimer = () => {
+  if(this.state.startTimer == true){
+    clearInterval(this.startInterval)
+    this.setState({startTimer:false})
+  }else{
+    this.startInterval = setInterval(this.timer,1000)
+    this.setState({startTimer:true})
+}
 }
 
     render() {
@@ -51,7 +55,7 @@ doubleDigit(num){
               {this.state.minutes}:{this.state.seconds}
           </Text>
           <View style={styles.row}>
-            <Button title="Pause"/>
+            <Button title="Pause" onPress={this.stopTimer}/>
             <Button title="Reset"/>
           </View>
           <View style={styles.row}>

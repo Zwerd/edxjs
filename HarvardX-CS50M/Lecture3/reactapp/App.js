@@ -1,6 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
 
+let seconds = ''
+
+
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -25,14 +29,21 @@ componentWillUpdate(){
 }
 
 timer = () => {
+
   this.setState(prevState => ({
     seconds: prevState.seconds - 1
   }))
 }
 
+doubleDigit(num){
+  if(String(num).length == 1){
+    return '0'+String(num)
+  }else(
+    return String(num)
+  )
+}
 
     render() {
-    console.log("check")
     return (
       <View style={styles.container}>
           <Text style={styles.title}>WORK TIMER</Text>

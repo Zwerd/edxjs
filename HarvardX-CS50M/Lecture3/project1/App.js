@@ -8,13 +8,15 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      minutes:'00',
-      seconds:'10',
+      minutes:'25',
+      seconds:'00',
       startTimer:true,
       button:'Stop',
-      status:'TIME TO WORK',
-      work:{mins:'25',secs:'00',},
-      break:{mins:'05',secs:'00'}
+      status:'WORK TIME',
+      workmins:'25',
+      worksecs:'00',
+      breakmins:'05',
+      breaksecs:'00',
     };
   }
 
@@ -23,6 +25,7 @@ componentDidMount(){
 }
 
 timer = () => {
+  console.log('in timer',this.state.minutes)
   let seconds = String(this.state.seconds - 1);
   let minutes = this.state.minutes;
   if(seconds.length == 1){
@@ -35,21 +38,31 @@ timer = () => {
   if(minutes.length==1){
     minutes = '0'+minutes
   }
+  this.setState({
+    seconds: seconds,
+    minutes: minutes,
+  })
   if(minutes == '00' && seconds =='00'){
     vibrate()
     clearInterval(this.startInterval)
-    this.setState({startTimer:'restart',button:'Start Again'})
+    console.log(this.state.minutes)
+    if(this.state.status == 'WORK TIME'){
+      this.setState({
+        status:'BREAK TIME',
+        minutes:this.state.breakmins,
+        seconds:this.state.breaksecs,
+      })
+      console.log(this.state.minutes)
+      this.startInterval = setInterval(this.timer,1000)
+    }else{
+      this.setState({
+        status:'WORK TIME',
+        minutes:this.state.workmins,
+        seconds:this.state.worksecs,
+      })
+      this.startInterval = setInterval(this.timer,1000)
+    }
   }
-  if(this.state.minutes == this.state.work.mins && this.state.seconds == this.state.work.secs){
-    this.setState({status:'TIME TO WORK',})
-  }
-  if(this.state.minutes == this.state.break.mins && this.state.seconds == this.state.break.secs){
-    this.setState({status:'BREAKING TIME',})
-  }
-  this.setState({
-    seconds: seconds,
-    minutes: minutes
-  })
 }
 
 stopTimer = () => {
@@ -71,16 +84,32 @@ stopTimer = () => {
 
 resetTimer = () => {
   this.setState({
-    seconds:'00',
     minutes:'25',
+    seconds:'00',
+    workmins:'25',
+    worksecs:'00',
+    breakmins:'05',
+    breaksecs:'00',
+    status:'WORK TIME',
     startTimer:true
   })
   clearInterval(this.startInterval)
   this.startInterval = setInterval(this.timer,1000)
 }
 
+set = () => {
+  this.setState({
+    minutes:this.state.workmins,
+    seconds:this.state.worksecs
+  })
+}
+dualDigit(number){
+  if(number.length==1){
+    return '0'+number
+  }
+}
+
     render() {
-      console.log(this.state.work.mins)
     return (
       <ScrollView>
         <View style={styles.container}>
@@ -103,14 +132,16 @@ resetTimer = () => {
               style={styles.textInput}
               underlineColorAndroid='transparent'
               placeholder='25'
-              onChangeText={(text)=>this.setState({work:{mins:text}})}
+              onChangeText={(text)=>{
+                this.setState({workmins:this.dualDigit(text)});
+              }}
              />
             <Text>Secs:</Text>
             <TextInput
               style={styles.textInput}
               underlineColorAndroid='transparent'
               placeholder='00'
-              onChangeText={(text)=>this.setState({work:{sec:text}})}
+              onChangeText={(text)=>this.setState({worksecs:this.dualDigit(text)})}
              />
           </View>
           <View style={styles.row}>
@@ -120,16 +151,19 @@ resetTimer = () => {
               style={styles.textInput}
               underlineColorAndroid='transparent'
               placeholder='05'
-              onChangeText={(text)=>this.setState({break:{mins:text}})}
+              onChangeText={(text)=>this.setState({breakmins:this.dualDigit(text)})}
              />
             <Text>Secs:</Text>
             <TextInput
               style={styles.textInput}
               underlineColorAndroid='transparent'
               placeholder='00'
-              onChangeText={(text)=>this.setState({break:{secs:text}})}
+              onChangeText={(text)=>this.setState({breaksecs:this.dualDigit(text)})}
              />
           </View>
+          <TouchableOpacity style={styles.button} onPress={this.set}>
+            <Text style={styles.text}>Setup the program</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     );
@@ -151,15 +185,16 @@ const styles = StyleSheet.create({
     fontSize: 100,
   },
   row:{
+    flex:1,
     flexDirection:'row',
     alignItems:'center',
-    margin: 6,
   },
   text:{
     fontWeight: 'bold',
     fontSize:20,
   },
   textInput:{
+    margin:2,
     padding:5,
     fontSize:20,
     borderColor:'black',
@@ -176,5 +211,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightblue',
     borderWidth:2,
     borderRadius:10,
-  }
+  },
+
 });

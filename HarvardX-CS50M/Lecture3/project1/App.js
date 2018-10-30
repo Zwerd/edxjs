@@ -86,10 +86,6 @@ resetTimer = () => {
   this.setState({
     minutes:'25',
     seconds:'00',
-    workmins:'25',
-    worksecs:'00',
-    breakmins:'05',
-    breaksecs:'00',
     status:'WORK TIME',
     startTimer:true
   })
@@ -100,7 +96,8 @@ resetTimer = () => {
 set = () => {
   this.setState({
     minutes:this.state.workmins,
-    seconds:this.state.worksecs
+    seconds:this.state.worksecs,
+    status:'WORK TIME'
   })
 }
 dualDigit(number){

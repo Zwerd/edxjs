@@ -15,9 +15,11 @@ export default class App extends React.Component {
   }
 
   sort = () => {
+    console.log('sorting', this.state.contacts)
     this.setState(prevState => ({
       contacts: [...prevState.contacts].sort(compareNames),
     }))
+    console.log('aftersorting', this.state.contacts)
   }
 
   renderItem = ({item}) => <Row {...item}/>

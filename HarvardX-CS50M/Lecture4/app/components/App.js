@@ -15,17 +15,15 @@ export default class App extends React.Component {
   }
 
   sort = () => {
-    console.log('sorting', this.state.contacts)
+    console.log('sorting', this.state.contacts.sort(compareNames))
     this.setState(prevState => ({
-      contacts: [...prevState.contacts].sort(compareNames),
+      contacts:[...prevState.contacts].sort(compareNames),
     }))
-
   }
 
   renderItem = ({item}) => <Row {...item}/>
 
   render() {
-    console.log('aftersorting', this.state.contacts.sort(compareNames))
       return(
         <View style={styles.container}>
           <TouchableOpacity style={styles.button} onPress={this.toggleContacts}>

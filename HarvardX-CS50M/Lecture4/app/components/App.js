@@ -27,13 +27,13 @@ export default class App extends React.Component {
     }))
   }
 
-addContact = () => {
-
-}
 
   render() {
-    if(this.state.showAddContacts){<AddContactForm />}
+    if(this.state.showAddContacts){
+      return <AddContactForm />
+    }
       return(
+
         <View style={styles.container}>
           <TouchableOpacity style={styles.button} onPress={this.toggleContacts}>
            <Text style={styles.text}>toggle contacts</Text>

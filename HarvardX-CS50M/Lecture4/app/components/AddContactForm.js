@@ -1,12 +1,11 @@
 import React from 'react'
-import {Button, StyleSheet, TextInput, View} from 'react-native'
-import {Constants} from 'expo'
+import {Button, StyleSheet, TextInput, View, TouchableOpacity, Text} from 'react-native'
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingTop: Constants.statusBarHeight,
   },
   input: {
     borderWidth: 1,
@@ -18,6 +17,14 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     borderRadius: 3,
   },
+  button:{
+    alignItems: 'center',
+    padding: 1
+  },
+  text:{
+    fontSize: 20,
+    color: 'deepskyblue'
+  }
 })
 
 export default class AddContactForm extends React.Component {
@@ -51,7 +58,12 @@ export default class AddContactForm extends React.Component {
           onChangeText={this.handlePhoneChange}
           placeholder="Phone"
         />
-        <Button title="Submit" />
+        <TouchableOpacity
+         style={styles.button}
+         
+         >
+          <Text style={styles.text}>Submit</Text>
+        </TouchableOpacity>
       </View>
     )
   }

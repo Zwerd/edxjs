@@ -1,17 +1,23 @@
 import React from 'react';
-import { Button, TouchableOpacity, FlatList, ScrollView, StyleSheet, Text, View, StatusBar } from 'react-native';
+import {SectionList, Button, TouchableOpacity, FlatList, ScrollView, StyleSheet, Text, View, StatusBar } from 'react-native';
 
 import contacts, {compareNames} from './contacts'
-import Row from './Row'
+import ContactsList from './ContactsList'
+import AddContactForm from './AddContactForm'
 
 export default class App extends React.Component {
   state = {
     showContacts: false,
+    showAddContacts: false,
     contacts: contacts,
   }
 
   toggleContacts = () => {
     this.setState(prevState => ({showContacts: !prevState.showContacts}))
+  }
+
+  toggleAddContacts = () => {
+    this.setState(prevState => ({showAddContacts: !prevState.showAddContacts}))
   }
 
   sort = () => {
@@ -21,24 +27,25 @@ export default class App extends React.Component {
     }))
   }
 
-  renderItem = ({item}) => <Row {...item}/>
+addContact = () => {
+
+}
 
   render() {
+    if(this.state.showAddContacts){<AddContactForm />}
       return(
         <View style={styles.container}>
           <TouchableOpacity style={styles.button} onPress={this.toggleContacts}>
            <Text style={styles.text}>toggle contacts</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={this.sort}>
-           <Text style={styles.text}>Sort</Text>
+          <TouchableOpacity style={styles.button} onPress={this.toggleAddContacts}>
+           <Text style={styles.text}>Add Contact</Text>
           </TouchableOpacity>
-          {this.state.showContacts && (
-            <FlatList
-                renderItem={this.renderItem}
-                data={this.state.contacts}
+          {this.state.showContacts && <ContactsList
+                contacts={this.state.contacts}
                 keyExtractor={(item) => item.toString()}
             />
-          )}
+          }
         </View>
     );
   }

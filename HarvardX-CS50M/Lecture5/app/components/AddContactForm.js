@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    justifyContent:'center',
   },
   input: {
     borderWidth: 1,
@@ -23,31 +24,52 @@ const styles = StyleSheet.create({
   },
   text:{
     fontSize: 20,
-    color: 'deepskyblue'
+  },
+  textValid:{
+    color: 'deepskyblue',
+  },
+  textInvalid:{
+    color: 'gray',
   }
 })
 
 export default class AddContactForm extends React.Component {
   state = {
-    key: this.props.key,
+    key:this.props.len,
     name: '',
     phone: '',
-    isFormValid: false,
+    isFormValid: false
   }
 
-  handleNameChange = name => {
-    this.setState({name})
+  componentDidUpdate(prevProps,prevState){
+    if(this.state.name !== prevState.name || this.state.phone !== prevState.phone){
+      this.validateForm()
+    }
   }
 
-  handlePhoneChange = phone => {
-    this.setState({phone})
+  getHandler = key => val => {
+    this.setState({[key]: val})
   }
+
+  handleNameChange = this.getHandler('name') // val => { this.setState({name: val}) }
+  handlePhoneChange = this.getHandler('phone')
+
 
   handelSubmit = () => {
-    let itemsLengs = this.props.
+    if(+this.state.phone >= 0 && this.state.phone.length ===10 && this.state.name.length >= 2){
     this.props.onSubmit(this.state)
+    }
   }
 
+  validateForm = () => {
+    console.log(this.state)
+    const names = this.state.name.split(' ')
+    if(+this.state.phone >= 0 && this.state.phone.length ===10 && this.state.name.length >= 2){
+      this.setState({isFormValid:true})
+    }else{
+      this.setState({isFormValid:false})
+    }
+  }
 
   render() {
     return (
@@ -68,8 +90,12 @@ export default class AddContactForm extends React.Component {
         <TouchableOpacity
          style={styles.button}
          onPress={this.handelSubmit}
+         disabled={!this.state.isFormValid}
          >
-          <Text style={styles.text}>Submit</Text>
+          <Text
+            style={[styles.text,this.state.isFormValid ? styles.textValid : styles.textInvalid]}>
+              Submit
+          </Text>
         </TouchableOpacity>
       </View>
     )

@@ -35,7 +35,7 @@ export default class App extends React.Component {
   render() {
     console.log('contacts', this.state.contacts)
     if(this.state.showAddContacts){
-      return <AddContactForm onSubmit={this.addContact} key={contacts.length+1}/>
+      return <AddContactForm onSubmit={this.addContact} len={contacts.length+1}/>
     }
       return(
 
